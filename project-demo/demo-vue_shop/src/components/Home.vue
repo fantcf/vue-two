@@ -15,7 +15,7 @@
       <el-aside :width="isCollapse ? '64px' : '200px'">
         <div class="toggle-button" @click="toggleCollapse">|||</div>
         <!-- 侧边栏菜单区域 -->
-        <el-menu background-color="#333744" text-color="#fff" active-text-color="#409EFF" unique-opened :collapse="isCollapse" :collapse-transition="false" router :default-active="activePath">
+        <el-menu background-color="white" text-color="black" active-text-color="#409EFF" unique-opened :collapse="isCollapse" :collapse-transition="false" router :default-active="activePath">
           <!-- 一级菜单 -->
           <el-submenu :index="item.id + ''" v-for="item in menulist" :key="item.id">
             <!-- 一级菜单的模板区域 -->
@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import {menulist} from '../models/homeData'
 export default {
   data() {
     return {
@@ -77,9 +78,10 @@ export default {
     },
     // 获取所有的菜单
     async getMenuList() {
-      const { data: res } = await this.$http.get('menus')
-      if (res.meta.status !== 200) return this.$message.error(res.meta.msg)
-      this.menulist = res.data
+      // const { data: res } = await this.$http.get('menus')
+      // if (res.meta.status !== 200) return this.$message.error(res.meta.msg)
+      // this.menulist = res.data
+      this.menulist = menulist
       console.log(res)
     },
     // 点击按钮，切换菜单的折叠与展开
@@ -100,7 +102,7 @@ export default {
   height: 100%;
 }
 .el-header {
-  background-color: #373d41;
+  background-color: #1e90ff;
   display: flex;
   justify-content: space-between;
   padding-left: 0;
@@ -117,7 +119,7 @@ export default {
 }
 
 .el-aside {
-  background-color: #333744;
+  background-color: white;
   .el-menu {
     border-right: none;
   }
@@ -132,7 +134,7 @@ export default {
 }
 
 .toggle-button {
-  background-color: #4a5064;
+  background-color: #909399;
   font-size: 10px;
   line-height: 24px;
   color: #fff;

@@ -15,24 +15,26 @@
       <el-aside :width="isCollapse ? '64px' : '200px'">
         <div class="toggle-button" @click="toggleCollapse">|||</div>
         <!-- 侧边栏菜单区域 -->
-        <el-menu background-color="white" text-color="black" active-text-color="#409EFF" unique-opened 
-                  :collapse="isCollapse" :collapse-transition="false" router :default-active="activePath">
+        <el-menu 
+          :collapse="isCollapse" 
+          background-color="white" 
+          text-color="black" 
+          active-text-color="#409EFF" 
+          :default-active="activePath"
+          unique-opened 
+          router
+          :collapse-transition="false" >
           <!-- 一级菜单 -->
           <el-submenu :index="item.id + ''" v-for="item in menulist" :key="item.id">
-            <!-- 一级菜单的模板区域 -->
             <template slot="title">
-              <!-- 图标 -->
               <i :class="iconsObj[item.id]"></i>
-              <!-- 文本 -->
               <span>{{item.authName}}</span>
             </template>
 
             <!-- 二级菜单 -->
             <el-menu-item :index="'/' + subItem.path" v-for="subItem in item.children" :key="subItem.id" @click="saveNavState('/' + subItem.path)">
               <template slot="title">
-                <!-- 图标 -->
                 <i class="el-icon-menu"></i>
-                <!-- 文本 -->
                 <span>{{subItem.authName}}</span>
               </template>
             </el-menu-item>
@@ -126,6 +128,15 @@ export default {
 
 .el-aside {
   background-color: white;
+  .toggle-button {
+  background-color: #c3c4c9;
+  font-size: 10px;
+  line-height: 24px;
+  color: #fff;
+  text-align: center;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+}
   .el-menu {
     border-right: none;
   }
@@ -139,13 +150,4 @@ export default {
   margin-right: 10px;
 }
 
-.toggle-button {
-  background-color: #909399;
-  font-size: 10px;
-  line-height: 24px;
-  color: #fff;
-  text-align: center;
-  letter-spacing: 0.2em;
-  cursor: pointer;
-}
 </style>

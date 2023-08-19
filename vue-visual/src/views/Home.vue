@@ -1,65 +1,86 @@
 <template>
-    <el-container class="home_container">
+    <el-container class="home-container">
         <el-header>
-            <div>
+            <div class="home-title">
                 <img src="../assets/logo.png">
-                <span>vue2自测平台</span>
+                <span>前端可视化平台</span>
             </div>
-            <el-button type="info" plain @click="logout">退出</el-button>
+            <el-button @click="logout">退出</el-button>
         </el-header>
-
         <el-container>
-            <el-aside>
-                <div class="toggle_btn">|||</div>
-                <el-menu
-                  :collpase="collpase"
-                  background-color="#fff"
-                  text-color="#ccc"
-                  active-text-color="#1e90ff"
-                >
-                </el-menu>
+            <el-aside :width="isCollapse ? '64px' : '250px'">
+                <div class="toggle-button" @click="toggle">|||</div>
+                <MenuList
+                  ref="MenuList"
+                  :menulist="menulist"
+                  :is-collapse="isCollapse"
+                  :bg-color="bgColor"
+                  :tx-color="txColor"
+                  :active-text-color="activeTextColor"
+                  :collapse-transition="collapseTransition" />
             </el-aside>
-            <el-main></el-main>
+            <el-main>
+                <router-view></router-view>
+            </el-main>
         </el-container>
     </el-container>
 </template>
 
-<script>
+<script lang="js">
+import MenuList from '@/components/MenuList/MenuList.vue'
+import {menulist} from '@/models/Home/menulist'
 export default {
-    name: 'Home',
+    name: 'home',
+    components: {
+        MenuList
+    },
     data() {
         return {
-            collpase: false
+            isCollapse: false,
+            menulist: menulist,
+            bgColor: 'white', 
+            txColor: 'black', 
+            activeTextColor: '#409EFF',
+            collapseTransition: false
         }
+    },
+    created() {
+        this.menulist = menulist
     },
     methods: {
         logout() {
             this.$router.push('/')
+        },
+        toggle() {
+            this.isCollapse = !this.isCollapse
+            console.log();
+            // this.$refs.MenuList.toggle()
+        }
+    },
+    computed: {
+        getPath() {
+            return menuItem => menuItem.path ? `/${menuItem.path}` : `${menuItem.id} `
         }
     }
 }
 </script>
 
-<style lang="less">
-.home_container {
+<style lang="less" scoped>
+.home-container {
     height: 100%;
-    background-color: #eaedf1;
 }
 .el-header {
-    width: 100%;
     background-color: #1e90ff;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-left: 0;
-    color: white;
-    font-size: 18px;
-    div {
+    .home-title {
         display: flex;
         align-items: center;
+        font-size: 20px;
+        color: white;
         img {
-            width: 40px;
-            margin-left: 10px;
+        width: 50px;
         }
         span {
             margin-left: 10px;
@@ -68,14 +89,13 @@ export default {
 }
 .el-aside {
     background-color: white;
-    width: 270px !important;
-    .toggle_btn {
-        width: 100%;
-        height: 20px;
-        font-size: 14px;
+    .toggle-button {
         background-color: #c3c4c9;
-        line-height: 20px;
+        height: 24px;
+        line-height: 24px;
         text-align: center;
+        font-size: 16px;
+        color: white;
         letter-spacing: 0.2em;
         cursor: pointer;
     }

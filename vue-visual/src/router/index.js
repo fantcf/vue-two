@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '@/views/Home'
-import Login from '@/views/Login'
-import Welcome from '@/views/Welcome'
+import Home from '@/pages/Home'
+import Login from '@/pages/Login'
+import Welcome from '@/pages/Welcome'
 
 Vue.use(VueRouter)
 
@@ -18,6 +18,7 @@ const routes = [
       {path: '/rights', component: Welcome},
       {path: '/basic', component: Welcome},
       {path: '/echarts', component: Welcome},
+      {path: '/el-radio', component: Welcome},
     ]
   },
 ]

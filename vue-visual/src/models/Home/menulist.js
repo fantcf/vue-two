@@ -6,13 +6,7 @@ const menulist = [
             {
                 id: 101,
                 title: '用户管理',
-                children: [
-                    {
-                        id: 10101, 
-                        title: '用户列表',
-                        path: 'users'
-                    }
-                ]
+                path: 'users'
             },
             {
                 id: 102,
@@ -38,8 +32,14 @@ const menulist = [
         children: [
             {
                 id: 201,
-                title: '基础功能',
-                path: 'basic'
+                title: 'Form',
+                children: [
+                    {
+                        id: 20101,
+                        title: 'Radio 多选框',
+                        path: 'el-radio'
+                    }
+                ]
             }
         ]
     },

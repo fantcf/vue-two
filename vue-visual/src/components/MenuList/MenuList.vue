@@ -1,5 +1,5 @@
 <template>
-        <el-menu 
+    <el-menu 
           :collapse="isCollapse"
           :collapse-transition="collapseTransition"
           :background-color="bgColor"
@@ -20,29 +20,29 @@
                             <i></i>
                             <span>{{ subItem.title }}</span>
                           </template>
-                            <el-menu-item v-for="nextItem in subItem.children" :index="'/' + nextItem.path" :key="nextItem.id">
+                            <el-menu-item v-for="nextItem in subItem.children" :index="'/' + nextItem.path" :key="nextItem.id" @click="saveNavState(nextItem.path)">
                               <template slot="title">
                                 <i></i>
                                 <span>{{ nextItem.title }}</span>
                               </template>
                             </el-menu-item>
                         </el-submenu>
-                        <el-menu-item v-else :index="'/' + subItem.path" :key="subItem.id">
+                        <el-menu-item v-else :index="'/' + subItem.path" :key="subItem.id" @click="saveNavState(subItem.path)">
                           <template slot="title">
                             <i></i>
-                            <span>{{ item.title }}</span>
+                            <span>{{ subItem.title }}</span>
                         </template>
                 </el-menu-item>
                     </template>
                   </el-submenu>
-                <el-menu-item v-else :index="'/' + item.path" :key="item.id">
+                <el-menu-item v-else :index="'/' + item.path" :key="item.id" @click="saveNavState(item.path)">
                     <template slot="title">
                         <i class="el-icon-menu"></i>
                         <span>{{ item.title }}</span>
                     </template>
                 </el-menu-item>
             </template>
-        </el-menu>
+    </el-menu>
 </template>
 
 <script>
@@ -63,8 +63,8 @@ export default {
     },
     methods: {
         saveNavState(path) {
-            this.activePath = path
-            this.$router.push(path)
+          this.activePath = `/${path}`
+          this.$emit('changePath', path)
         },
         toggle() {
             this.isCollpase = !this.isCollpase

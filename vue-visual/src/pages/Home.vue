@@ -9,17 +9,18 @@
         </el-header>
         <el-container>
             <el-aside :width="isCollapse ? '64px' : '250px'">
-                <div class="toggle-button" @click="toggle">|||</div>
+                <div class="toggle-button" @click="isCollapse = !isCollapse">|||</div>
                 <MenuList
-                  ref="MenuList"
                   :menulist="menulist"
                   :is-collapse="isCollapse"
                   :bg-color="bgColor"
                   :tx-color="txColor"
                   :active-text-color="activeTextColor"
-                  :collapse-transition="collapseTransition" />
+                  :collapse-transition="collapseTransition"
+                  @changePath="chanagePath($event)" />
             </el-aside>
             <el-main>
+                <head-tabs></head-tabs>
                 <router-view></router-view>
             </el-main>
         </el-container>
@@ -29,10 +30,12 @@
 <script lang="js">
 import MenuList from '@/components/MenuList/MenuList.vue'
 import {menulist} from '@/models/Home/menulist'
+import headTabs from '@/components/HeadTabs/HeadTabs.vue'
 export default {
     name: 'home',
     components: {
-        MenuList
+        MenuList,
+        headTabs
     },
     data() {
         return {
@@ -41,7 +44,7 @@ export default {
             bgColor: 'white', 
             txColor: 'black', 
             activeTextColor: '#409EFF',
-            collapseTransition: false
+            collapseTransition: false,
         }
     },
     created() {
@@ -51,16 +54,17 @@ export default {
         logout() {
             this.$router.push('/')
         },
-        toggle() {
-            this.isCollapse = !this.isCollapse
-            console.log();
-            // this.$refs.MenuList.toggle()
+        chanagePath(path) {
+            console.log(path);
         }
     },
     computed: {
         getPath() {
             return menuItem => menuItem.path ? `/${menuItem.path}` : `${menuItem.id} `
-        }
+        },
+        // getBtnContents() {
+        //     return 
+        // }
     }
 }
 </script>

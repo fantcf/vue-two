@@ -20,8 +20,11 @@
                   @changePath="chanagePath($event)" />
             </el-aside>
             <el-main>
-                <head-tabs></head-tabs>
-                <router-view></router-view>
+                <head-tabs :tab-list="tabList">
+                    <div slot="main">
+                        <router-view/>
+                    </div>
+                </head-tabs>
             </el-main>
         </el-container>
     </el-container>
@@ -31,6 +34,7 @@
 import MenuList from '@/components/MenuList/MenuList.vue'
 import {menulist} from '@/models/Home/menulist'
 import headTabs from '@/components/HeadTabs/HeadTabs.vue'
+import { tabList } from '@/models/Home/tabList'
 export default {
     name: 'home',
     components: {
@@ -40,15 +44,17 @@ export default {
     data() {
         return {
             isCollapse: false,
-            menulist: menulist,
+            menulist: '',
             bgColor: 'white', 
             txColor: 'black', 
             activeTextColor: '#409EFF',
             collapseTransition: false,
+            tabList: ''
         }
     },
     created() {
         this.menulist = menulist
+        this.tabList = tabList
     },
     methods: {
         logout() {

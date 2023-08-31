@@ -1,20 +1,31 @@
 <template>
-    <el-tabs>
-        <el-tab-pane>
-            <span slot="label" :route="{path: 'roles'}" router @click="$router.push('/roles')"><i class="el-icon-date">我的行程</i></span>
-            我的行程
+    <el-tabs type="border-card" v-model="currentTab"  @tab-click="changeRoute">
+        <el-tab-pane v-for="tab in tabList" :key="tab.pathRoute" :name="tab.pathRoute">
+            <span slot="label" ><i :class="tab.className"></i>{{ tab.tabLabel }}</span>
+            <slot name="main"></slot>
         </el-tab-pane>
-        <el-tab-pane label="消息中心">消息中心</el-tab-pane>
-        <el-tab-pane label="角色管理">角色管理</el-tab-pane>
-        <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>
     </el-tabs>
 </template>
 
 <script>
 export default {
     name: 'headTabs',
+    props: ['tabList'],
     data() {
-        return {}
+        return {
+            currentTab: 'users'
+        }
+    },
+    methods: {
+        changeRoute() {
+            this.$router.push('/'+ this.currentTab)
+        }
     }
 }
 </script>
+
+<style>
+.el-tabs {
+    height: 100%;
+}
+</style>

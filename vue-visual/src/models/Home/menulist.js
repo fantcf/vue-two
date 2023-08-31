@@ -47,6 +47,28 @@ const menulist = [
         id: 3,
         title: 'Echarts',
         path: 'echarts'
+    },
+    {
+        id: 4,
+        title: 'Vue',
+        children: [
+            {
+                id: 401,
+                title: 'Vuex',
+                children: [
+                    {
+                        id: 40101,
+                        title: 'VuexA',
+                        path: 'vuexA'
+                    },
+                    {
+                        id: 40102,
+                        title: 'VuexB',
+                        path: 'vuexB'
+                    }
+                ]
+            }
+        ]
     }
 ]
 

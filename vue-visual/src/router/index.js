@@ -13,15 +13,29 @@ const routes = [
     path: '/home',
     component: Home,
     children: [
-      {path: '/users', component: Welcome},
+      {path: '/users', component: Welcome, children: [
+        {path: '/users/a', component: Welcome},
+        {path: '/users/b', component: Welcome}
+      ]},
       {path: '/roles', component: Welcome},
       {path: '/rights', component: Welcome},
       {path: '/basic', component: Welcome},
       {path: '/echarts', component: Welcome},
       {path: '/el-radio', component: Welcome},
+      {path: '/vuexA', component: Welcome},
+      {path: '/vuexB', component: Welcome},
     ]
   },
 ]
+
+const originPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function(location, resolve, reject) {
+  if (resolve && reject) {
+    originPush.call(this, location, resolve, reject)
+  } else {
+    originPush.call(this, location, () => {}, () => {})
+  }
+}
 
 const router = new VueRouter({
   mode: 'history',

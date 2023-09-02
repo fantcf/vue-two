@@ -20,11 +20,16 @@
                   @changePath="chanagePath($event)" />
             </el-aside>
             <el-main>
-                <head-tabs :tab-list="tabList">
-                    <div slot="main">
+                <template v-for="tab in tabList">
+                    <head-tabs :tab-list="tab.tabItem" v-if="tab.pathRoute === currentPath">
+                        <div slot="main">
+                            <router-view/>
+                        </div>
+                    </head-tabs>
+                    <div v-else>
                         <router-view/>
                     </div>
-                </head-tabs>
+                </template>
             </el-main>
         </el-container>
     </el-container>
@@ -49,7 +54,8 @@ export default {
             txColor: 'black', 
             activeTextColor: '#409EFF',
             collapseTransition: false,
-            tabList: ''
+            tabList: '',
+            currentPath: ''
         }
     },
     created() {
@@ -61,6 +67,7 @@ export default {
             this.$router.push('/')
         },
         chanagePath(path) {
+            this.currentPath = path;
             console.log(path);
         }
     },

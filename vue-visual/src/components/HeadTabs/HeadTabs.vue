@@ -16,6 +16,8 @@ export default {
             currentTab: 'users'
         }
     },
+    created() {
+    },
     methods: {
         changeRoute() {
             this.$router.push('/'+ this.currentTab)

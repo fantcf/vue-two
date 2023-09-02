@@ -11,3 +11,6 @@ body,
 .basic-container {
     height: 100%;
 }
+.el-row {
+    margin-bottom: 20px;
+}

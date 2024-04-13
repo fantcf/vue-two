@@ -5,6 +5,7 @@ import Login from '@/pages/Login'
 import Welcome from '@/pages/Welcome'
 import Users from '@/views/Test/Users/Users'
 import Test from '@/pages/Test'
+import TodoList from '@/views/vue/TodoList/TodoList'
 
 Vue.use(VueRouter)
 
@@ -43,6 +44,7 @@ const routes = [
       {path: '/el-radio', component: Welcome},
       {path: '/vuexA', component: Welcome},
       {path: '/vuexB', component: Welcome},
+      {path: '/todoList', component: TodoList},
     ]
   },
 ]

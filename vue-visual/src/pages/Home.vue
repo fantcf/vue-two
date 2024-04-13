@@ -36,9 +36,9 @@
 </template>
 
 <script lang="js">
-import MenuList from '@/components/MenuList/MenuList.vue'
+import MenuList from '@/components/common/MenuList/MenuList.vue'
 import {menulist} from '@/models/Home/menulist'
-import headTabs from '@/components/HeadTabs/HeadTabs.vue'
+import headTabs from '@/components/common/HeadTabs/HeadTabs.vue'
 import { tabList } from '@/models/Home/tabList'
 export default {
     name: 'home',

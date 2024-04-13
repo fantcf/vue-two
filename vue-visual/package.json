@@ -17,7 +17,8 @@
     "lodash": "^4.17.11",
     "nprogress": "^0.2.0",
     "vue-quill-editor": "^3.0.6",
-    "vue-table-with-tree-grid": "^0.2.4"
+    "vue-table-with-tree-grid": "^0.2.4",
+    "nanoid": "^4.0.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.0",

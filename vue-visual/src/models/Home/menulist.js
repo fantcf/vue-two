@@ -117,6 +117,10 @@ const menulist = [
                         path: 'vuexB'
                     }
                 ]
+            },{
+                id: createMenuItemId(menuId[menuTitlt.test], '02'),
+                title: 'todoList',
+                path: 'todoList'
             }
         ]
     }

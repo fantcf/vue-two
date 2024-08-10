@@ -1,6 +1,7 @@
 # vue-two
-以vue2为基础技术栈，搭配各种ui框架，实现页面；
+以vue2为基石，构建openlayers、three等项目功能；
 
-# 目录说明
-1. project—demo：为样例文件，用于参考学习；
-2. project-manual：为实战文件，用于编程实战；
+# 更新节奏
+1. 【24年08月】
+   |------ 1. 配置prettier，统一管理代码格式；
+   |------ 2. 新建MenuList类，统一管理菜单栏；

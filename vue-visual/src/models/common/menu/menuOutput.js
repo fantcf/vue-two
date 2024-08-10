@@ -6,6 +6,7 @@ import { echartsMenuItem } from './menuData/echartsMenuData';
 import { vueMenuItem } from './menuData/vueMenuData';
 import { openlayersMenuItem } from './menuData/openlayersMenuData';
 import { threeMenuItem } from './menuData/threeMenuData';
+import { someIntrestingItem } from './menuData/someIntresting';
 
 const expandMenu = [
   vueMenuItem,
@@ -13,6 +14,7 @@ const expandMenu = [
   threeMenuItem,
   elementMenuItem,
   echartsMenuItem,
+  someIntrestingItem,
   testMenuItem,
 ];
 const menulist = new MenuList(baseMenu, expandMenu).list;

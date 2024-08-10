@@ -6,6 +6,8 @@ import Welcome from '@/pages/Welcome';
 import Users from '@/views/Test/Users/Users';
 import Test from '@/pages/Test';
 import TodoList from '@/views/vue/TodoList/TodoList';
+import calculator from '@/views/someIntresting/calculator/index.vue';
+import SomeIntresting from '@/pages/SomeIntresting.vue';
 
 Vue.use(VueRouter);
 
@@ -54,6 +56,15 @@ const routes = [
         path: '/three',
         component: Welcome,
         children: [{ path: '/three/map', component: Welcome }],
+      },
+      {
+        path: '/someIntresting',
+        component: SomeIntresting,
+        redirect: '/someIntresting/calculator',
+        children: [
+          { path: '/someIntresting/home', component: Welcome },
+          { path: '/someIntresting/calculator', component: calculator },
+        ],
       },
     ],
   },

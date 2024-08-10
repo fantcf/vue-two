@@ -5,6 +5,7 @@ export const menuTitleEum = {
   Vue: 'Vue',
   Openlayers: 'Openlayers',
   Three: 'Three',
+  SomeIntresting: 'SomeIntresting',
 };
 
 export const baseMenu = [

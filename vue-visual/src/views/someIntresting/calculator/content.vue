@@ -1,6 +1,9 @@
 <template>
   <div class="calculator-base">
     <div class="calculator-input">
+      <div class="input-content history" style="color: #888b8d">
+        {{ history }}
+      </div>
       <div class="input-content" style="color: #d37376">{{ formula }}</div>
       <div class="result">{{ result }}</div>
     </div>
@@ -10,7 +13,12 @@
         v-for="(item, index) in calculatorBtnsData"
         :key="index"
       >
-        <div class="calBtn" v-for="(subItem, subKey) in item" :key="subKey">
+        <div
+          class="calBtn"
+          v-for="(subItem, subKey) in item"
+          :key="subKey"
+          @click="onClickBtn(subItem)"
+        >
           {{ subItem }}
         </div>
       </div>
@@ -23,19 +31,34 @@
   </div>
 </template>
 <script>
-import { Calculator } from '@/views/someIntresting/calculator/utils/calculator.js';
 import { calculatorBtnsData } from '@/views/someIntresting/calculator/models/calculatorBtns.js';
+import { Calculator } from '@/models/class/Calculator';
 export default {
   data() {
     return {
       formula: '9*2',
       result: '18',
+      history: '9*2 = 18',
       calculator: '',
       calculatorBtnsData,
     };
   },
   created() {
     this.calculator = new Calculator();
+    this.formula = this.calculator.input;
+    this.result = this.calculator.output;
+    this.history = this.calculator.history;
+  },
+  methods: {
+    onClickBtn(val) {
+      this.calculator.inputVal(val);
+      this.updateData();
+    },
+    updateData() {
+      this.formula = this.calculator.input;
+      this.result = this.calculator.output;
+      this.history = this.calculator.history;
+    },
   },
 };
 </script>
@@ -45,7 +68,7 @@ export default {
 }
 .calculator-input {
   background-color: #fff;
-  height: 80px;
+  height: 110px;
   font-size: 22px;
   margin: 1rem 1.8rem 2rem;
   border: 1px solid #fff;
@@ -59,8 +82,13 @@ export default {
   text-align: right;
   padding-right: 10px;
 }
-.result {
-  border-top: 1px solid #999;
+.calculator-input .history {
+  height: 25px;
+  font-size: 14px;
+  line-height: 25px;
+}
+.calculator-input .input-content {
+  border-bottom: 1px solid rgba(222, 220, 219, 0.5);
 }
 .calBtn-row {
   margin: 1rem 1rem;

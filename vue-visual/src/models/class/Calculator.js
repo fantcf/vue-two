@@ -35,6 +35,7 @@ export class Calculator {
       const infixRe = this.buildInfix(newVal, 'add');
       this.input = infixRe.join('');
       this.calculate();
+      return;
     }
   }
 

@@ -10,28 +10,23 @@
     <div class="calculator-buttons">
       <div
         class="calBtn-row"
-        v-for="(item, index) in calculatorBtnsData"
+        v-for="(item, index) in calcBtnsData"
         :key="index"
       >
         <div
-          class="calBtn"
-          v-for="(subItem, subKey) in item"
-          :key="subKey"
-          @click="onClickBtn(subItem)"
+          v-for="subItem in item"
+          :class="subItem.class"
+          :key="subItem.key"
+          @click="onClickBtn(subItem.key)"
         >
-          {{ subItem }}
+          {{ subItem.title }}
         </div>
-      </div>
-      <div class="calBtn-row">
-        <div class="calBtn special">0</div>
-        <div class="calBtn">.</div>
-        <div class="calBtn special">=</div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { calculatorBtnsData } from '@/views/someIntresting/calculator/models/calculatorBtns.js';
+import { calcBtnsData } from '@/views/someIntresting/calculator/models/calculatorBtns.js';
 import { Calculator } from '@/models/class/Calculator';
 export default {
   data() {
@@ -40,14 +35,12 @@ export default {
       result: '18',
       history: '9*2 = 18',
       calculator: '',
-      calculatorBtnsData,
+      calcBtnsData,
     };
   },
   created() {
     this.calculator = new Calculator();
-    this.formula = this.calculator.input;
-    this.result = this.calculator.output;
-    this.history = this.calculator.history;
+    this.updateData();
   },
   methods: {
     onClickBtn(val) {

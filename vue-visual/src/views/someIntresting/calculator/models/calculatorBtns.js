@@ -21,7 +21,7 @@ const firstRow = [
     class: commonClass,
   },
   {
-    key: 'radical',
+    key: 'rad',
     title: '√',
     class: commonClass,
   },
@@ -43,12 +43,12 @@ const secondRow = [
     class: commonClass,
   },
   {
-    key: 'divide',
+    key: 'div',
     title: '/',
     class: commonClass,
   },
   {
-    key: 'percent',
+    key: 'per',
     title: '%',
     class: commonClass,
   },
@@ -70,12 +70,12 @@ const thirdRow = [
     class: commonClass,
   },
   {
-    key: 'multiply',
+    key: 'mul',
     title: '*',
     class: commonClass,
   },
   {
-    key: 'reverse',
+    key: 'rev',
     title: '1/x',
     class: commonClass,
   },
@@ -119,7 +119,7 @@ const fifthRow = [
     class: commonClass,
   },
   {
-    key: 'equals',
+    key: 'eq',
     title: '=',
     class: 'calBtn special',
   },

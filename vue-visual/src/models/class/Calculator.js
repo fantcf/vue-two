@@ -31,7 +31,6 @@ export class Calculator {
   inputVal(val) {
     // 判断是否是数字
     const newVal = parseInt(val, 10);
-    console.log(val, this.lastVal, this.infix);
     if (!isNaN(newVal)) {
       const infixRe = this.buildInfix(newVal, 'add');
       this.input = infixRe.join('');
@@ -50,6 +49,9 @@ export class Calculator {
       if (action === 'clsA') {
         this.resetData();
       } else if (action === 'del') {
+        const infixRe = this.buildInfix('', 'del');
+        this.input = infixRe.join('');
+        this.calculate();
       } else if (action === 'eq') {
         this.calculate(action);
       }
@@ -69,6 +71,8 @@ export class Calculator {
       } else if (action === 'rev') {
         this.lastVal = 1 / this.lastVal;
       }
+      const infixRe = this.buildInfix(this.lastVal, 'change');
+      this.input = infixRe.join('');
     } else if (['div', 'mul', 'minus', 'plus'].includes(action)) {
       const isNotTargetSign = [
         operationSignEum.mul,
@@ -107,7 +111,19 @@ export class Calculator {
       }
       this.infix.push((this.lastVal = val));
       return this.infix;
+    } else if (type === 'change') {
+      this.lastVal = val;
+      this.infix.pop();
+      this.infix.push(val);
+      return this.infix;
     } else if (type === 'del') {
+      newVal = this.infix.pop();
+      newVal = Math.floor(newVal / 10);
+      if (newVal) {
+        this.infix.push(newVal);
+      }
+      this.lastVal = this.infix[this.infix.length - 1];
+      return this.infix;
     }
   }
 
@@ -128,9 +144,17 @@ export class Calculator {
       if (!this.isOp(item)) {
         this.suffix.push(item);
       } else {
-        if (!temp.length) {
-          temp.push(item);
+        if (temp.length > 0) {
+          let beforeOp = temp[temp.length - 1];
+          // 判断是否item的层级是否比beforeOp高
+          if (!this.priorHigher(beforeOp, item)) {
+            while (temp.length && !this.priorHigher(beforeOp, item)) {
+              this.suffix.push(temp.pop());
+              beforeOp = temp[temp.length - 1];
+            }
+          }
         }
+        temp.push(item);
       }
     });
     while (temp.length) {
@@ -159,7 +183,9 @@ export class Calculator {
   }
 
   // 2. 判断运算符优先级
-  priorHigher() {}
+  priorHigher(a, b) {
+    return ['+', '-'].includes(a) && ['*', '/'].includes(b);
+  }
 
   // 3. 进行运算符的运算
   opCalc(b, op, a) {

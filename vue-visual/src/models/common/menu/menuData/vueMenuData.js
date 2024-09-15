@@ -5,21 +5,44 @@ export const vueMenuItem = {
   title: menuTitleEum.Vue,
   children: [
     {
+      key: 'axios',
+      fatherKey: 'vue',
+      title: 'axios',
+      path: 'vue/axios',
+      children: [
+        {
+          key: 'express',
+          fatherKey: 'axios',
+          title: 'express',
+          path: 'vue/axios/express',
+          children: [
+            {
+              key: 'baseExpress',
+              fatherKey: 'express',
+              title: 'baseExpress',
+              path: 'vue/axios/express/baseExpress',
+            },
+          ],
+        },
+      ],
+    },
+    {
       key: 'vuex',
       fatherKey: 'vue',
       title: 'Vuex',
+      path: 'vue/Vuex',
       children: [
         {
           key: 'vuexA',
           fatherKey: 'vuex',
           title: 'VuexA',
-          path: 'vuexA',
+          path: 'vue/Vuex/vuexA',
         },
         {
           key: 'vuexB',
           fatherKey: 'vuex',
           title: 'VuexB',
-          path: 'vuexB',
+          path: 'vue/Vuex/vuexB',
         },
       ],
     },
@@ -27,7 +50,7 @@ export const vueMenuItem = {
       key: 'todoList',
       fatherKey: 'vue',
       title: 'todoList',
-      path: 'todoList',
+      path: 'vue/todoList',
     },
   ],
 };

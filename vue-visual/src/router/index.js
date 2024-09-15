@@ -5,9 +5,14 @@ import Login from '@/pages/Login';
 import Welcome from '@/pages/Welcome';
 import Users from '@/views/Test/Users/Users';
 import Test from '@/pages/Test';
+import VueView from '@/pages/VueView';
 import TodoList from '@/views/vue/TodoList/TodoList';
 import calculator from '@/views/someIntresting/calculator/index.vue';
 import SomeIntresting from '@/pages/SomeIntresting.vue';
+import Vuex from '@/views/vue/Vuex/index';
+import axiosView from '@/views/vue/axios/index';
+import expressView from '@/views/vue/axios/express/index';
+import BaseExpress from '@/views/vue/axios/express/BaseExpress';
 
 Vue.use(VueRouter);
 
@@ -41,12 +46,43 @@ const routes = [
           { path: '/test/orders', component: Welcome },
         ],
       },
+      {
+        path: '/vue',
+        component: VueView,
+        redirect: '/vue/axios/express/baseExpress',
+        children: [
+          {
+            path: '/vue/Vuex',
+            component: Vuex,
+            redirect: '/vue/Vuex/vuexA',
+            children: [
+              { path: '/vue/Vuex/vuexA', component: Welcome },
+              { path: '/vue/Vuex/vuexB', component: Welcome },
+            ],
+          },
+          { path: '/vue/todoList', component: TodoList },
+          {
+            path: '/vue/axios',
+            component: axiosView,
+            children: [
+              {
+                path: '/vue/axios/express',
+                component: expressView,
+                redirect: '/vue/axios/express/baseExpress',
+                children: [
+                  {
+                    path: '/vue/axios/express/baseExpress',
+                    component: BaseExpress,
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
       { path: '/basic', component: Welcome },
       { path: '/echarts', component: Welcome },
       { path: '/el-radio', component: Welcome },
-      { path: '/vuexA', component: Welcome },
-      { path: '/vuexB', component: Welcome },
-      { path: '/todoList', component: TodoList },
       {
         path: '/openlayers',
         component: Welcome,

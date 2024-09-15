@@ -19,40 +19,7 @@
           <i class="el-icon-menu"></i>
           <span>{{ item.title }}</span>
         </template>
-        <template v-for="subItem in item.children">
-          <el-submenu
-            v-if="subItem.children && subItem.children.length > 0"
-            :index="subItem.id + ''"
-            :key="subItem.id"
-          >
-            <template slot="title">
-              <i></i>
-              <span>{{ subItem.title }}</span>
-            </template>
-            <el-menu-item
-              v-for="nextItem in subItem.children"
-              :index="'/' + nextItem.path"
-              :key="nextItem.id"
-              @click="saveNavState(nextItem.path)"
-            >
-              <template slot="title">
-                <i></i>
-                <span>{{ nextItem.title }}</span>
-              </template>
-            </el-menu-item>
-          </el-submenu>
-          <el-menu-item
-            v-else
-            :index="'/' + subItem.path"
-            :key="subItem.id"
-            @click="saveNavState(subItem.path)"
-          >
-            <template slot="title">
-              <i></i>
-              <span>{{ subItem.title }}</span>
-            </template>
-          </el-menu-item>
-        </template>
+        <MenuList :menulist="item.children"></MenuList>
       </el-submenu>
       <el-menu-item
         v-else
@@ -70,8 +37,10 @@
 </template>
 
 <script>
+import MenuList from '@/components/common/MenuList/MenuList.vue';
 export default {
   name: 'MenuList',
+  components: { MenuList },
   props: [
     'menulist',
     'bgColor',

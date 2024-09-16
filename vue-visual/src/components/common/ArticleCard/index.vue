@@ -7,18 +7,24 @@
     >
       <div slot="header" class="clearfix article-title">
         <span>{{ article.title }}</span>
+        <el-button
+          style="display: flex; float: right; margin-top: -5px"
+          @click="deleteItem(article.id)"
+          >×</el-button
+        >
       </div>
       <div class="article-body">
         <p>{{ article.description }}</p>
-        <el-collapse class="article-collapse">
-          <el-collapse-item :title="article.subTitle">
+        <el-collapse class="article-collapse" v-model="actives">
+          <el-collapse-item :title="article.subTitle" :name="article.id">
             <p>{{ article.mainContent }}</p>
+            <slot name="content" :articleItem="article">123</slot>
           </el-collapse-item>
         </el-collapse>
       </div>
       <div class="article-footer">
-        <slot name="footer">
-          <el-button>插槽按钮</el-button>
+        <slot name="footer" :articleItem="article">
+          <!-- <el-button @click="$emit('btnTest')">插槽按钮</el-button> -->
         </slot>
       </div>
     </el-card>
@@ -32,16 +38,44 @@ export default {
       default: () => [],
       type: Array,
     },
+    activeNames: {
+      default: () => [],
+      type: Array,
+    },
   },
   data() {
     return {
       articles: this.articleData,
+      actives: this.activeNames,
     };
   },
+  watch: {
+    articleData: {
+      deep: true,
+      immediate: true,
+      handler(val) {
+        this.articles = val;
+      },
+    },
+  },
   methods: {
-    readMore(articleId) {
-      // 处理阅读更多逻辑，比如跳转到文章详情页面
-      console.log('阅读更多:', articleId);
+    deleteItem(articleId) {
+      console.log(this.actives);
+
+      this.$confirm('是否删除?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+        .then(() => {
+          this.$emit('deleteItem', articleId);
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除',
+          });
+        });
     },
   },
 };
@@ -49,13 +83,13 @@ export default {
 
 <style scoped>
 .article-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  margin: 0 auto;
+  max-height: 1000px;
+  overflow: hidden scroll;
 }
 .article-card {
   width: 100%;
-  min-width: 350px;
+  min-width: 1000px;
   margin-bottom: 20px;
 }
 .article-title {

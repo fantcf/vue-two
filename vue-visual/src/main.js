@@ -15,11 +15,22 @@ import { highlight, languages } from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/themes/prism-tomorrow.css';
+import { clickOutside } from './directives/clickOutside';
+import { autoFocus } from './directives/autoFocus';
+
 Vue.component('PrismEditor', PrismEditor);
 Vue.prototype.$highlight = highlight;
 Vue.prototype.$languages = languages.js;
 Vue.use(ElementUI);
 Vue.use(Prism);
+
+Vue.directive(clickOutside.directiveName, {
+  bind: clickOutside.bind,
+  unbind: clickOutside.unbind,
+});
+Vue.directive(autoFocus.directiveName, {
+  inserted: autoFocus.inserted,
+});
 
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios; // 挂载到 Vue 原型上

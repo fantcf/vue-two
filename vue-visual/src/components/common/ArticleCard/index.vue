@@ -6,26 +6,39 @@
       class="article-card"
     >
       <div slot="header" class="clearfix article-title">
-        <span>{{ article.title }}</span>
+        <component
+          autofocus
+          :ref="`input-title-${index}`"
+          :is="inputStatus.title"
+          @blur="onBlur(comsObj.title)"
+          @click="onClick(comsObj.title, index)"
+          v-model="article.title"
+          >{{ article.title }}</component
+        >
         <el-button
           style="display: flex; float: right; margin-top: -5px"
-          @click="deleteItem(article.id)"
-          >×</el-button
-        >
+          icon="el-icon-delete"
+          @click="deleteItem(article.id, article.title)"
+        ></el-button>
       </div>
       <div class="article-body">
-        <p>{{ article.description }}</p>
+        <component
+          autofocus
+          :ref="`input-description-${index}`"
+          :is="inputStatus.description"
+          @blur="onBlur(comsObj.description)"
+          @click="onClick(comsObj.description, index)"
+          v-model="article.description"
+          >{{ article.description }}</component
+        >
         <el-collapse class="article-collapse" v-model="actives">
           <el-collapse-item :title="article.subTitle" :name="article.id">
-            <p>{{ article.mainContent }}</p>
-            <slot name="content" :articleItem="article">123</slot>
+            <slot name="content" :articleItem="article"></slot>
           </el-collapse-item>
         </el-collapse>
       </div>
       <div class="article-footer">
-        <slot name="footer" :articleItem="article">
-          <!-- <el-button @click="$emit('btnTest')">插槽按钮</el-button> -->
-        </slot>
+        <slot name="footer" :articleItem="article"> </slot>
       </div>
     </el-card>
   </div>
@@ -47,9 +60,32 @@ export default {
     return {
       articles: this.articleData,
       actives: this.activeNames,
+      currentComponent: 'el-input',
+      comsObj: {
+        title: 'title',
+        description: 'description',
+      },
+      inputStatus: {
+        title: 'span',
+        description: 'p',
+      },
+      inputBaseStatus: {
+        title: 'el-input',
+        description: 'el-input',
+      },
+      inputChangeStatus: {
+        title: 'span',
+        description: 'p',
+      },
+      currentRef: '',
     };
   },
   watch: {
+    'inputStatus.title': {
+      handler(val) {
+        this.switchInput(val);
+      },
+    },
     articleData: {
       deep: true,
       immediate: true,
@@ -59,14 +95,29 @@ export default {
     },
   },
   methods: {
-    deleteItem(articleId) {
-      console.log(this.actives);
-
-      this.$confirm('是否删除?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning',
-      })
+    switchInput(val) {
+      if (val === 'el-input') {
+        this.$refs[this.currentRef][0].focus();
+      }
+    },
+    onClick(target, index) {
+      // 这里代码需要有很多要改的；
+      this.currentRef = `input-${target}-${index}`;
+      this.inputStatus[target] = this.inputBaseStatus[target];
+    },
+    onBlur(target) {
+      this.inputStatus[target] = this.inputChangeStatus[target];
+    },
+    deleteItem(articleId, articleTitle) {
+      this.$confirm(
+        `是否删除标题为"${articleTitle}",id为"${articleId}"?`,
+        '提示',
+        {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+        },
+      )
         .then(() => {
           this.$emit('deleteItem', articleId);
         })

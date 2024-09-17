@@ -2,13 +2,12 @@
   <div>
     <h2>适配基础express接口</h2>
     <div class="head-btn">
-      <el-button @click="addArticleItem">添加模块</el-button>
+      <el-button @click="addArticleItem">新增文章</el-button>
     </div>
     <hr />
     <el-container>
       <article-card
         :articleData="articleData"
-        @btnTest="btnTest"
         :activeNames="[0, 1]"
         @deleteItem="onDeleteItem"
       >
@@ -16,7 +15,7 @@
           <prism-editor
             class="my-editor"
             v-model="scope.articleItem.code"
-            :highlight="highlighter"
+            :highlight="() => $highlight(scope.articleItem.code, $languages)"
             :options="editorOptions"
             line-numbers
           ></prism-editor>
@@ -24,7 +23,7 @@
             <el-button @click="exectCode(scope.articleItem.code)"
               >执行代码</el-button
             >
-            <el-button @click="getBaseCode">重置</el-button>
+            <el-button @click="init">重置</el-button>
           </div>
         </template>
         <template v-slot:footer="scope">
@@ -32,11 +31,22 @@
         </template>
       </article-card>
     </el-container>
+    <dialog-form
+      ref="dialogForm"
+      :baseModel="dialogBaseModel"
+      :baseData="dialogBaseData"
+      @onConfirmArticleDialog="onConfirmArticleDialog"
+    ></dialog-form>
   </div>
 </template>
 <script>
 import ArticleCard from '@/components/common/ArticleCard/index';
-// import articleData from '@/views/vue/axios/express/models/articleData.js';
+import DialogForm from '@/components/DialogForm/index.vue';
+import { editorOptions } from '@/components/common/Prismjs';
+import {
+  dialogBaseModel,
+  dialogBaseData,
+} from '@/views/vue/axios/express/models/articleData';
 import {
   getBaseCode,
   createArticleItem,
@@ -44,51 +54,54 @@ import {
   updateArticleItem,
 } from '@/api/vue/expressApi';
 export default {
-  components: { ArticleCard },
+  components: { ArticleCard, DialogForm },
   data() {
     return {
+      dialogBaseModel,
+      dialogBaseData,
       articleData: [],
-      editorOptions: {
-        enableBasicAutocompletion: true, //启用基本自动完成
-        enableSnippets: true, // 启用代码段
-        enableLiveAutocompletion: true, //启用实时自动完成
-        tabSize: 2, //标签大小
-        fontSize: 14, //设置字号
-        showPrintMargin: false, //去除编辑器里的竖线
-      },
+      baseStatic: {},
+      editorOptions,
     };
   },
   created() {
-    this.getBaseCode();
+    this.init();
   },
   methods: {
-    getBaseCode() {
+    init() {
       getBaseCode().then((res) => {
         if (res) {
           this.articleData = res;
         }
       });
     },
-    btnTest() {
-      console.log(this.articleData);
-    },
     highlighter(code) {
       return this.$highlight(code, this.$languages);
     },
     // 添加文章item；
     addArticleItem() {
-      createArticleItem().then((res) => {
-        if (res) {
-          this.$message.success('创建成功!');
-          this.getBaseCode();
-        }
-      });
+      this.$confirm(`是否手动添加文章内容?`, '添加文章方式', {
+        confirmButtonText: '手动添加文章内容',
+        cancelButtonText: '添加默认内容',
+        type: 'warning',
+      })
+        .then(() => {
+          this.$refs.dialogForm.dialogVisible = true;
+        })
+        .catch(() => {
+          createArticleItem().then((res) => {
+            if (res) {
+              this.$message.success('创建成功!');
+              this.init();
+            }
+          });
+        });
     },
     onDeleteItem(id) {
       deleteArticleItem(id).then((res) => {
         if (res) {
           this.$message.success('删除成功！');
-          this.getBaseCode();
+          this.init();
         }
       });
     },
@@ -104,7 +117,15 @@ export default {
       updateArticleItem(data).then((res) => {
         if (res) {
           this.$message.success('修改成功！');
-          this.getBaseCode();
+          this.init();
+        }
+      });
+    },
+    onConfirmArticleDialog(form) {
+      createArticleItem(form).then((res) => {
+        if (res) {
+          this.$message.success('创建成功！');
+          this.init();
         }
       });
     },

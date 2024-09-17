@@ -1,24 +1,31 @@
-const articleData = [
+// 用于创建文章时v-model；
+export const dialogBaseModel = {
+  title: '',
+  description: '',
+  subTitle: '',
+  code: '',
+};
+
+// 用于创建文章时el-form-item循环时用；
+export const dialogBaseData = [
   {
-    id: 1,
-    title: '基础接口',
-    description: '主要用于基础的get接口调用',
-    subTitle: 'GET测试1',
-    code: `
-console.log('a')
-function test() {}
-const a = 'a'
-const a = 'b'
-`,
-    btnTitle: '123',
+    key: 'title',
+    label: '文章名',
+    type: 'input',
   },
   {
-    id: 2,
-    title: '基础接口',
-    description: '',
-    code: '',
-    btnTitle: '312',
+    key: 'description',
+    label: '文章简述',
+    type: 'textarea',
+  },
+  {
+    key: 'subTitle',
+    label: '小标题',
+    type: 'input',
+  },
+  {
+    key: 'code',
+    label: '代码',
+    type: 'prism',
   },
 ];
-
-export default articleData;

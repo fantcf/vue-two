@@ -8,11 +8,14 @@ export function getBaseCode() {
   });
 }
 
-export function createArticleItem() {
+export function createArticleItem(data) {
+  console.log(data);
+
   return request({
     url: '/baseExpress/code/create',
     method: 'POST',
     baseURL: '/api',
+    params: data,
   });
 }
 

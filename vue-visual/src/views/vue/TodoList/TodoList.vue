@@ -53,7 +53,6 @@ export default {
       });
     },
     updateTodo(todoId, title) {
-      console.log(todoId, title);
       this.todoList.forEach((item) => {
         if (item.id === todoId) {
           item.title = title;

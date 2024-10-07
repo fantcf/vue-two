@@ -69,11 +69,15 @@ export default {
   },
   methods: {
     init() {
-      getBaseCode().then((res) => {
-        if (res) {
-          this.articleData = res;
-        }
-      });
+      getBaseCode()
+        .then((res) => {
+          if (res) {
+            this.articleData = res;
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     },
     highlighter(code) {
       return this.$highlight(code, this.$languages);

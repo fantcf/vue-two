@@ -14,7 +14,7 @@ app.get('/baseExpress/code/query', (req, res) => {
 // 创建articleItem；
 app.post('/baseExpress/code/create', (req, res) => {
     let item;
-    if (req.query) {
+    if (req.query && Object.keys(req.query).length > 0) {
         item = req.query;
     } else {
         item = {

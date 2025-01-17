@@ -15,12 +15,37 @@ import { highlight, languages } from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/themes/prism-tomorrow.css';
+// import 'vue-prism-editor/dist/prismeditor.min.css';
 import { clickOutside } from './directives/clickOutside';
 import { autoFocus } from './directives/autoFocus';
+// import * as prettier from 'prettier';
+// import * as prettierPluginBabel from 'prettier/plugins/babel';
 
 Vue.component('PrismEditor', PrismEditor);
-Vue.prototype.$highlight = highlight;
 Vue.prototype.$languages = languages.js;
+Vue.prototype.$highlight = highlight;
+// const myCustomPlugin = {
+//   parsers: {
+//     "my-custom-parser": {
+//       async parse(text) {
+//         const ast = await prettierPluginBabel.parsers.babel.parse(text);
+//         ast.program.body[0].expression.callee.name = "_";
+//         return ast;
+//       },
+//       astFormat: "estree",
+//     },
+//   },
+// };
+// Vue.prototype.$highlight = (code, langs) => {
+//   const newCode = prettier.format(code, {
+//     parser: 'my-custom-parser',
+//     plugins: [myCustomPlugin],
+//     semi: true,
+//     singleQuote: true,
+//     tabWidth: 4,
+//   });
+//   return highlight(code, langs);
+// };
 Vue.use(ElementUI);
 Vue.use(Prism);
 

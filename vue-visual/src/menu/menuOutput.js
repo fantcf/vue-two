@@ -1,4 +1,4 @@
-import { MenuList } from '../../class/MenuList';
+import { MenuList } from '../models/class/MenuList';
 import { baseMenu } from './menuData/baseMenuData';
 import { testMenuItem } from './menuData/testMenuData';
 import { elementMenuItem } from './menuData/elementMenuData';

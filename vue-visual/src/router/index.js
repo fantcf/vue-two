@@ -13,6 +13,9 @@ import Vuex from '@/views/vue/Vuex/index';
 import axiosView from '@/views/vue/axios/index';
 import expressView from '@/views/vue/axios/express/index';
 import BaseExpress from '@/views/vue/axios/express/BaseExpress';
+import baseThree from '@/views/three/views/base/index.vue'
+import startThree from '@/views/three/views/base/start/index.vue'
+import startModules from '@/views/three/views/base/start-modules/index.vue';
 
 Vue.use(VueRouter);
 
@@ -90,8 +93,16 @@ const routes = [
       },
       {
         path: '/three',
-        component: Welcome,
-        children: [{ path: '/three/map', component: Welcome }],
+        component: baseThree,
+        redirect: '/three/base/start',
+        children: [
+          { path: '/three/map', component: Welcome },
+          { path: '/three/base', component: baseThree, children: [
+              { path: '/three/base/start', component: startThree },
+              { path: '/three/base/start-modules', component: startModules },
+            ]
+          }
+        ],
       },
       {
         path: '/someIntresting',

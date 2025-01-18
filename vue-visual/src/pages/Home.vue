@@ -4,6 +4,7 @@
       <div class="home-title">
         <img src="../assets/logo.png" />
         <span>前端可视化平台</span>
+        <span class="home-current-title">{{currentTitle}}</span>
       </div>
       <el-button @click="logout">退出</el-button>
     </el-header>
@@ -17,7 +18,7 @@
           :tx-color="txColor"
           :active-text-color="activeTextColor"
           :collapse-transition="collapseTransition"
-          @changePath="chanagePath($event)"
+          @changePath="onChangePath"
         />
       </el-aside>
       <el-main>
@@ -41,7 +42,7 @@
 
 <script>
 import MenuList from '@/components/common/MenuList/MenuList.vue';
-import { menulist } from '@/models/common/menu/menuOutput';
+import { menulist } from '@/menu/menuOutput';
 import headTabs from '@/components/common/HeadTabs/HeadTabs.vue';
 import { tabList } from '@/models/home/tabList';
 export default {
@@ -60,6 +61,7 @@ export default {
       collapseTransition: false,
       tabList: '',
       currentPath: '',
+      currentTitle: '首页',
     };
   },
   created() {
@@ -70,9 +72,9 @@ export default {
     logout() {
       this.$router.push('/');
     },
-    chanagePath(path) {
+    onChangePath(path, title) {
       this.currentPath = path;
-      console.log('menuClick', path);
+      this.currentTitle = title;
     },
   },
   computed: {
@@ -80,9 +82,6 @@ export default {
       return (menuItem) =>
         menuItem.path ? `/${menuItem.path}` : `${menuItem.id} `;
     },
-    // getBtnContents() {
-    //     return
-    // }
   },
 };
 </script>
@@ -97,6 +96,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   .home-title {
+    flex-grow: 1;
     display: flex;
     align-items: center;
     font-size: 20px;
@@ -106,6 +106,9 @@ export default {
     }
     span {
       margin-left: 10px;
+    }
+    .home-current-title {
+      margin: 0 auto;
     }
   }
 }
